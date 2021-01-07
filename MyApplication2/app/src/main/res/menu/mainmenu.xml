@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/revise_popup"
+        android:title="revise"
+        android:icon="@android:drawable/ic_menu_save" />
+
+
+    <item
+        android:id="@+id/delete_popup"
+        android:title="delete"
+        android:icon="@android:drawable/ic_menu_search" />
+
+
+</menu>
