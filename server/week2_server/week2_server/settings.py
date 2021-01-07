@@ -39,13 +39,7 @@ DJANGO_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-<<<<<<< HEAD
     "rest_framework",
-=======
-    'django_db_views',
-    'rest_framework',
-    'api',
->>>>>>> 20633e9 (rebase #1)
 ]
 
 PROJECT_APPS = [
