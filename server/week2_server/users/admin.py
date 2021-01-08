@@ -9,6 +9,7 @@ class UserAdmin(UserAdmin):
         "fields": (
             "nickname",
             "login_method",
+            "uid",
         )
     }), )
 

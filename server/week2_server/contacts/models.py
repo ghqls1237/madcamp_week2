@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 
 class Contact(models.Model):
+    pkk = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=50)
     phone = models.CharField(max_length = 40)
     user = models.ForeignKey("users.User",on_delete=models.CASCADE, related_name = "contacts")  
