@@ -1,21 +1,32 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:id="@+id/container"
-    android:background="@color/white"
-    android:orientation="vertical" >
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/recyclerView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="MissingDefaultResource"
+    >
 
 
-    <GridView
-        android:id="@+id/gridView1"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_grid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:columnWidth="100dp"
-        android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"
-        android:numColumns="auto_fit" >
-    </GridView>
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="37dp"
+        tools:layout_editor_absoluteY="92dp" />
 
+    <ImageButton
+        android:id="@+id/add_btn"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/roundcorner"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_add"
+        android:tint="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</FrameLayout>
-
+</androidx.constraintlayout.widget.ConstraintLayout>
