@@ -43,7 +43,7 @@ public class SubActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(SubActivity.this,MainActivity.class);
+                Intent intent=new Intent(SubActivity.this,contacts_dbaccess.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }

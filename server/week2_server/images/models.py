@@ -5,7 +5,7 @@ from core import models as core_models
 class Image(core_models.TimeStampedModel):
     image = models.ImageField(upload_to="images")
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="images")
-
+    
 
     def __str__(self):
         return f"{self.user.nickname}'s image"
