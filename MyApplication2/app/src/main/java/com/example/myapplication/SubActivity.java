@@ -95,15 +95,15 @@ public class SubActivity extends AppCompatActivity {
                 try{
                     BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "address4.txt", false));
 
-                    bw.write( readStr +
-                            "  },\n" +
-                            "  {\n" +
-                            "    \"picture\":\""+R.drawable.human+"\",\n" +
-                            "    \"name\":\""+Name.getText().toString()+"\",\n" +
-                            "    \"phone\":\""+Phone.getText().toString()+"\"\n" +
-                            "  }\n" +
-                            "]" );
-                    bw.close();
+//                    bw.write( readStr +
+//                            "  },\n" +
+//                            "  {\n" +
+//                            "    \"picture\":\""+R.drawable.human+"\",\n" +
+//                            "    \"name\":\""+Name.getText().toString()+"\",\n" +
+//                            "    \"phone\":\""+Phone.getText().toString()+"\"\n" +
+//                            "  }\n" +
+//                            "]" );
+//                    bw.close();
                 }catch (Exception e){
                     e.printStackTrace();
                 }

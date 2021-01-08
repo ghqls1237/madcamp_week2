@@ -164,7 +164,7 @@ public class Fragment1 extends Fragment {
                 String name = jObject.getString("name");
                 String phone = jObject.getString("phone");
 
-                PICTURE[i] = picture;
+                PICTURE[i]= picture;
                 NAME[i] = name;
                 PHONE[i] = phone;
                 //append("name:"+name+", phone:"+ phone);
@@ -258,7 +258,7 @@ public class Fragment1 extends Fragment {
         }
 
         for (int i =0; i<len; i++) {
-            adapter.addItemLast(ContextCompat.getDrawable(getActivity(), PICTURE[i]), NAME[i]);
+            adapter.addItemLast(ContextCompat.getDrawable(getActivity(),R.drawable.human ), NAME[i]);
         }
 
 
@@ -355,7 +355,7 @@ public class Fragment1 extends Fragment {
 
                                 adapter.clearAdapter();
                                 for (int i =0; i<len; i++) {
-                                    adapter.addItemLast(ContextCompat.getDrawable(getActivity(), PICTURE[i]), NAME[i]);
+                                    adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
                                 }
                                 adapter.notifyDataSetChanged();
 
@@ -490,7 +490,7 @@ public class Fragment1 extends Fragment {
                     listview.setAdapter(adapter2);
                     for (int i = 0; i < NAME.length; i++) {
                         if (NAME[i].toLowerCase().contains(search_text.toLowerCase()) || PHONE[i].contains(search_text)) {
-                            adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), PICTURE[i]), NAME[i]);
+                            adapter2.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
                             stringInSearchText = stringInSearchText + 1;
                         }
                     }

@@ -36,23 +36,7 @@ public class MainActivity extends AppCompatActivity {
         tab.setupWithViewPager(vp);
 
     }
-
-    //Fragment2 <-> Fragment2Bookmarks transaction에 사용
-    public void onFragmentChange(int index) {
-        Fragment2Bookmarks fragment2Bookmarks = new Fragment2Bookmarks();
-        Fragment2 fragment2 = new Fragment2();
-
-//        fragment2Detail.zoomImageFromThumb(R.drawable.a1);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2Detail).commit();
-        if(index == 0) {
-            getSupportFragmentManager().beginTransaction().remove(fragment2Bookmarks).commit();
-            getSupportFragmentManager().beginTransaction().replace(R.id.container_bookmarks, fragment2).commit();
-        }
-        else if (index ==1) {
-            getSupportFragmentManager().beginTransaction().remove(fragment2).commit();
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment2Bookmarks).commit();
-        }
-    }
+    
 
 
 
