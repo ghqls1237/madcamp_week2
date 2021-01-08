@@ -4,6 +4,7 @@
     package="com.example.myapplication">
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".new_fragment2"></activity>
+        <activity android:name=".contacts_dbaccess"></activity>
+        <activity android:name=".new_fragment2" />
         <activity android:name=".Address_revise" />
         <activity android:name=".IdealWorldCupResult" />
         <activity android:name=".Tab3Female" />
