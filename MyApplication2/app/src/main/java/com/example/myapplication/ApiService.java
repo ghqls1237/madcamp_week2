@@ -29,4 +29,16 @@ public interface ApiService {
 
     //@PUT("/contacts")
     //Call<JsonArray> putPost(@POST("id") int id, @Body Post post);
+
+//    //For Login
+//    @GET
+//    Call
+//    @FormUrlEncoded
+//    @POST("/users/login/{uid}&{email}&{method}&{nickname}")
+//    @FormUrlEncoded
+    @POST("/users/login/")
+    Call<String> login(@Body User user);
+
+    @GET("/users/login")
+    Call<String> login_get();
 }

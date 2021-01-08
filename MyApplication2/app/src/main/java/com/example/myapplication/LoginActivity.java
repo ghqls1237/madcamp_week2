@@ -21,16 +21,27 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.JsonArray;
+
 import java.util.Arrays;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth ;
     CallbackManager callbackManager;
-
     String[] info_list = {"email", "public_profile"};
+
+    //retrofit
+    RetrofitClient retrofitClient = new RetrofitClient();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_login);
 //        FirebaseApp.initializeApp(this);
         auth = FirebaseAuth.getInstance();
@@ -40,6 +51,26 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
+
+//            String email = auth.getCurrentUser().getEmail();
+//            String displayName = auth.getCurrentUser().getDisplayName();
+//            String uid = auth.getCurrentUser().getUid();
+//            String method =  auth.getCurrentUser().getProviderData().get(1).getProviderId().toString().toLowerCase();
+//            User user = new User(uid, email, method, displayName);
+//            //Retrofit use
+//            Call<String> call = retrofitClient.apiService.login(user);
+//            call.enqueue(new Callback<String>() {
+//                @Override
+//                public void onResponse(Call<String> call, Response<String> response) {
+//                    System.out.println("login 통신 성공함");
+//                }
+//
+//                @Override
+//                public void onFailure(Call<String> call, Throwable t) {
+//                    System.out.println("login 통신 실패");
+//                }
+//
+//            });
         }
         else{
             //should login
@@ -87,6 +118,26 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     //Login success
                     Log.d("Success", "signInWithCredential:Success");
+                    String email = auth.getCurrentUser().getEmail();
+                    String displayName = auth.getCurrentUser().getDisplayName();
+                    String uid = auth.getCurrentUser().getUid();
+                    String method =  auth.getCurrentUser().getProviderData().get(1).getProviderId().toString().toLowerCase();
+                    User user = new User(uid, email, method, displayName);
+                    //Retrofit use
+                    Call<String> call = retrofitClient.apiService.login(user);
+                    call.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            System.out.println("login 통신 성공함");
+                        }
+
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
+                            System.out.println("login 통신 실패");
+                        }
+                        
+                                 });
+
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                     finish();
