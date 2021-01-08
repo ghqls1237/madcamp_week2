@@ -1,11 +1,8 @@
 package com.example.myapplication;
 
+
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,23 +15,15 @@ import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.internal.CollectionMapper;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FacebookAuthCredential;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth ;
@@ -48,7 +37,16 @@ public class LoginActivity extends AppCompatActivity {
 //        FirebaseApp.initializeApp(this);
         auth = FirebaseAuth.getInstance();
         callbackManager = CallbackManager.Factory.create();
-
+        if(auth.getCurrentUser() != null){
+            //Login state
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            //should login
+            System.out.println("you should login first!!");
+        }
         Button facebookBtn = findViewById(R.id.facebook_login_btn);
         facebookBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,13 +55,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button logoutBtn = findViewById(R.id.logout);
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logout();
-            }
-        });
     }
 
     private void facebookLogin() {
@@ -89,17 +80,23 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void handleFacebookAccessToken(AccessToken token){
+        Log.d("Token", "handleFacebookAccessToken : " + token.toString());
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
+        Log.d("Credential", "Credential is " + credential);
         auth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     //Login success
-                    Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                    Log.d("Success", "signInWithCredential:Success");
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
+                    finish();
                 }
                 else{
                     //Login Fail
-                    Toast.makeText(LoginActivity.this, "Login Success", Toast.LENGTH_SHORT).show();
+                    Log.d("Failure", "signInWithCredential:Failure : " + task);
+                    Toast.makeText(LoginActivity.this, "Login fail", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -115,5 +112,7 @@ public class LoginActivity extends AppCompatActivity {
     private void logout(){
         auth.signOut();
     }
+
+
 
 }
