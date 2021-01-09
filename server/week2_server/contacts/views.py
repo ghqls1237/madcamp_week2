@@ -10,8 +10,9 @@ from users import models as user_models
 # request는 장고에 의해 자동으로 전달되는 HTTP 요청 객체
 # request는 사용자가 전달한 데이터를 확인할 때 사용
 
-@api_view(["GET", "POST", "PUT"])
+@api_view(["GET", "POST", "DELETE","PUT"])
 @csrf_exempt
+
 def contact_view(request):
     if request.method == "GET": # 정보 가져오기
         uid = request.GET.get("uid")
@@ -32,15 +33,11 @@ def contact_view(request):
         uid = data_json["uid"]
         user = user_models.User.objects.get(uid=uid)
         contact = contacts.Contact.objects.create(name = name, phone = phone, image = image, user = user)
-        contact.save()
         print("method is POST")
         return Response("{Result:Post}")
         
-        
-
-    elif request.method == "PUT": # 정보 수정하기
-        print("method is PUT")
-
     elif request.method == "DELETE": # 정보 삭제하기
-        print("method is Delete")
-        
+        pk = request.GET.get("pk")
+        contact = contacts.Contact.objects.get(pkk = pk)
+        contact.delete()
+        return Response("{Result:Put}")
