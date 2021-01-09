@@ -48,7 +48,7 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Fragment2 extends Fragment {
+public class Fragment2 extends Fragment{
 
     ArrayList<GridItem> image_list = new ArrayList<GridItem>();
     int columns = 3;
