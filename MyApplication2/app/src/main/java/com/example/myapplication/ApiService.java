@@ -15,17 +15,46 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface ApiService {
-    @GET("/contacts")
-    Call<JsonArray> getretrofitdata();
+    @GET("/contacts/")
+    Call<JsonArray> getretrofitdata(@Query("uid") String uid);
 
-    @FormUrlEncoded
-    @POST("/contacts")
-    Call<JsonArray> createPost(@Field("name") String name, @Field("phone") String phone, @Field("image") String image);
+    @POST("/contacts/")
+    Call<String> createPost(@Body Contact contact);
 
-    @DELETE("/contacts")
-    Call<Void> deletePost(@Path("id") int id);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    @DELETE("/contacts/{id}")
+//    Call<JsonArray> deletePost(@Path("id") int id);
+
 
     //@PUT("/contacts")
     //Call<JsonArray> putPost(@POST("id") int id, @Body Post post);

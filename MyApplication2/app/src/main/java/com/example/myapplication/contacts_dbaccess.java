@@ -35,7 +35,8 @@ public class contacts_dbaccess extends AppCompatActivity {
         setContentView(R.layout.activity_contacts_dbaccess);
 
 
-        RetrofitClient retrofitClient = new RetrofitClient();
+        /*
+        *         RetrofitClient retrofitClient = new RetrofitClient();
         Call<JsonArray> call = retrofitClient.apiService.getretrofitdata();
         call.enqueue(new Callback<JsonArray>() {
             @Override
@@ -49,7 +50,24 @@ public class contacts_dbaccess extends AppCompatActivity {
             public void onFailure(Call<JsonArray> call, Throwable t) {
                 System.out.println("실패함");
             }
-        });
+        });*/
+
+//        RetrofitClient retrofitClient = new RetrofitClient();
+//                Call<JsonArray> call = retrofitClient.apiService.getretrofitdata();
+//                call.enqueue(new Callback<JsonArray>() {
+//                    @Override
+//                    public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+//                        if (response.isSuccessful()) {
+//                            System.out.println("성공함");
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<JsonArray> call, Throwable t) {
+//                System.out.println("실패함");
+//            }
+//        });
+
 
     }
 

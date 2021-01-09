@@ -9,4 +9,6 @@ class User(AbstractUser):
     LOGIN_CHOICES = ((LOGIN_FACEBOOK, "FaceBook"), )
     login_method = models.CharField(choices=LOGIN_CHOICES,max_length=20,default=LOGIN_FACEBOOK)
     nickname = models.CharField(max_length=15, blank=True, null=True)
+
+
     
