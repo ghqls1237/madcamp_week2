@@ -3,7 +3,7 @@ from core import models as core_models
 
 # Create your models here.
 class Image(core_models.TimeStampedModel):
-    image = models.ImageField(upload_to="images")
+    image = models.TextField()
     user = models.ForeignKey("users.User", on_delete=models.CASCADE, related_name="images")
     
 
