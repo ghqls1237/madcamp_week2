@@ -11,4 +11,5 @@ class User(AbstractUser):
     nickname = models.CharField(max_length=15, blank=True, null=True)
 
 
+
     

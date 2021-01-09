@@ -14,7 +14,7 @@ class UserAdmin(UserAdmin):
     }), )
 
     list_display = (
-        "username",
+        "email",
         "nickname",
         "login_method",
     )
