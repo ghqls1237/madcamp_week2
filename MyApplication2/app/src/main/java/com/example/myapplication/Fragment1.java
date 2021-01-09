@@ -46,6 +46,13 @@ import java.util.ArrayList;
 import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.JsonArray;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,7 +65,7 @@ public class Fragment1 extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static int[] PICTURE;
+    private static String[] PICTURE;
     private static String[] NAME;
     private static String[] PHONE;
     // TODO: Rename and change types of parameters
@@ -69,79 +76,168 @@ public class Fragment1 extends Fragment {
     private int stringInSearchText = 0;
     private int adapterMode = 0;
     private int index3 = 0;
-    //private ArrayAdapter<String> adapter;
-    //private ArrayList<String> final_list;
+    private static String uid;
+    String server_result;
 
     ListViewAdapter adapter;
     ListViewAdapter adapter2;
 
-    //private ArrayList<ListViewItem> listViewItemList = new ArrayList<ListViewItem>() ;
 
 
-    private String getTxtString() throws IOException {
+
+    //Json 형태의 string으로 다 읽어와.
 
 
-        int num = 0;
-        BufferedWriter bw2 = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "dummy.txt", true));
-        bw2.write("1\n");
-        bw2.close();
+    //json 파싱하기
+    void doJSONParser() throws IOException {
+        // json 데이터
 
-        BufferedReader br2 = new BufferedReader(new FileReader(getActivity().getFilesDir() + "dummy.txt"));
-        String readStr2 = "";
-        String str2 = null;
-        while (((str2 = br2.readLine()) != null)) {
-            readStr2 += str2 + "\n";
-            num ++;
+        StringBuffer sb = new StringBuffer();
+
+        String str = server_result;
+
+        try {
+            JSONArray jarray = new JSONArray(str);
+            len = jarray.length();
+            PICTURE = new String[len];
+            NAME = new String[len];
+            PHONE = new String[len];
+            for (int i=0;i<len;i++){
+                JSONObject jObject = jarray.getJSONObject(i);
+
+                String picture = jObject.getString("image");
+                String name = jObject.getString("name");
+                String phone = jObject.getString("phone");
+                uid = jObject.getString("user");
+
+                PICTURE[i] = picture;
+                NAME[i] = name;
+                PHONE[i] = phone;
+                //append("name:"+name+", phone:"+ phone);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-        br2.close();
+    }
 
-        if (num == 1) {
+    public Fragment1() {
+        // Required empty public constructor
+    }
 
-            int picture = R.drawable.human;
+    // TODO: Rename and change types and number of parameters
+    public static Fragment1 newInstance(String param1, String param2) {
+        Fragment1 fragment = new Fragment1();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
-            BufferedWriter bw = new BufferedWriter(new FileWriter(getActivity().getFilesDir() + "address4.txt", false));
-
-            //초기 값
-            bw.write("[\n" +
-                    "  {\n" +
-                    "    \"picture\":\"" + picture + "\",\n" +
-                    "    \"name\":\"♡mom♡\",\n" +
-                    "    \"phone\":\"01043741113\"\n" +
-                    "  },\n" +
-                    "  {\n" +
-                    "    \"picture\":\"" + picture + "\",\n" +
-                    "    \"name\":\"♡dad♡\",\n" +
-                    "    \"phone\":\"01032917507\"\n" +
-                    "  },\n" +
-                    "  {\n" +
-                    "    \"picture\":\"" + picture + "\",\n" +
-                    "    \"name\":\"nahye\",\n" +
-                    "    \"phone\":\"01094904447\"\n" +
-                    "  },\n" +
-                    "  {\n" +
-                    "    \"picture\":\"" + picture + "\",\n" +
-                    "    \"name\":\"♡grandma♡\",\n" +
-                    "    \"phone\":\"01034689496\"\n" +
-                    "  }\n" +
-                    "]");
-
-            bw.close();
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        BufferedReader br = new BufferedReader(new FileReader(getActivity().getFilesDir() + "address4.txt"));
-        String readStr = "";
-        String str = null;
-        while (((str = br.readLine()) != null)) {
-            readStr += str + "\n";
-        }
-        br.close();
-
-        System.out.println("abc------------");
-        return readStr;
     }
 
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment\
+
+        View view = inflater.inflate(R.layout.fragment_1, null);
+
+        adapter = new ListViewAdapter() ;
+        //adapter2 = new ListViewAdapter();
+
+
+        ListView listview = (ListView) view.findViewById(R.id.listview1);
+        listview.setAdapter(adapter);
+
+
+        RetrofitClient retrofitClient = new RetrofitClient();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Call<JsonArray> call = retrofitClient.apiService.getretrofitdata(uid);
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    server_result = response.body().toString();
+                    System.out.println("result : " + server_result);
+
+                    try {
+                        doJSONParser();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    for (int i = 0; i < len; i++) {
+                        adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
+                    }
+
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                System.out.println("실패함");
+            }
+        });
+
+
+
+        //+ add address 구현하기
+        Button button1 = view.findViewById(R.id.button_frag1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(getActivity(),SubActivity.class);
+                intent.putExtra("uid",uid);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
+
+
+
+        return view;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
     //json 파싱하기
     void doJSONParser() throws IOException {
         // json 데이터
@@ -179,14 +275,14 @@ public class Fragment1 extends Fragment {
         // Required empty public constructor
     }
 
-    /**
+
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
      * @return A new instance of fragment Fragment1.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static Fragment1 newInstance(String param1, String param2) {
         Fragment1 fragment = new Fragment1();
@@ -503,4 +599,7 @@ public class Fragment1 extends Fragment {
         return view;
     }
 
+
 }
+
+     */

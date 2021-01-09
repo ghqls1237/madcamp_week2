@@ -11,8 +11,10 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +29,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class SubActivity extends AppCompatActivity {
@@ -43,7 +49,7 @@ public class SubActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(SubActivity.this,contacts_dbaccess.class);
+                Intent intent=new Intent(SubActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -57,56 +63,35 @@ public class SubActivity extends AppCompatActivity {
                 EditText Name = (EditText)findViewById(R.id.address_name);
                 EditText Phone = (EditText)findViewById(R.id.address_phone);
 
-                /*
-                {
-                    "phone":"01021321",
-                    "name":"min",
-                    "phone":"01058368290"
-                },
-                */
+                Intent listener = getIntent();
+                String uid = listener.getStringExtra("uid");
 
-                //기존 txt 파일 읽어오는 코드
-                BufferedReader br = null;
-                try {
-                    br = new BufferedReader(new FileReader(getFilesDir() + "address4.txt"));
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                RetrofitClient retrofitClient = new RetrofitClient();
+                Contact contact = new Contact(Name.getText().toString(),Phone.getText().toString(),"123456",uid);
 
-                String readStr = "";
-                String str = null;
-                while (true) {
-                    try {
-                        if (!((str = br.readLine()) != null)) break;
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                Call<String> call = retrofitClient.apiService.createPost(contact);
+                call.enqueue(new Callback<String>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        System.out.println(Name.getText().toString());
+                        System.out.println(Phone.getText().toString());
+                        System.out.println("123456");
+                        System.out.println(uid);
+
+                        System.out.println("성공함");
+                        if (response.isSuccessful()) {
+                            System.out.println("성공함");
+                        }
                     }
-                    readStr += str + "\n";
-                }
-                readStr = readStr.substring(0,readStr.length()-4);
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable t) {
+                        System.out.println("실패함");
+                    }
+
+                });
 
 
-
-                try{
-                    BufferedWriter bw = new BufferedWriter(new FileWriter(getFilesDir() + "address4.txt", false));
-
-//                    bw.write( readStr +
-//                            "  },\n" +
-//                            "  {\n" +
-//                            "    \"picture\":\""+R.drawable.human+"\",\n" +
-//                            "    \"name\":\""+Name.getText().toString()+"\",\n" +
-//                            "    \"phone\":\""+Phone.getText().toString()+"\"\n" +
-//                            "  }\n" +
-//                            "]" );
-//                    bw.close();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
                // System.o
 
                 Intent intent=new Intent(SubActivity.this,MainActivity.class);
