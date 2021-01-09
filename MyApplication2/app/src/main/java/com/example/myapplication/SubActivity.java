@@ -36,7 +36,7 @@ import retrofit2.Response;
 
 
 public class SubActivity extends AppCompatActivity {
-
+    private static String uid;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +52,7 @@ public class SubActivity extends AppCompatActivity {
                 Intent intent=new Intent(SubActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -64,29 +65,23 @@ public class SubActivity extends AppCompatActivity {
                 EditText Phone = (EditText)findViewById(R.id.address_phone);
 
                 Intent listener = getIntent();
-                String uid = listener.getStringExtra("uid");
+                uid = listener.getStringExtra("uid");
 
                 RetrofitClient retrofitClient = new RetrofitClient();
-                Contact contact = new Contact(Name.getText().toString(),Phone.getText().toString(),"123456",uid);
+                Contact contact = new Contact(Name.getText().toString(),Phone.getText().toString(),"null",uid);
 
                 Call<String> call = retrofitClient.apiService.createPost(contact);
                 call.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        System.out.println(Name.getText().toString());
-                        System.out.println(Phone.getText().toString());
-                        System.out.println("123456");
-                        System.out.println(uid);
-
-                        System.out.println("성공함");
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
                         if (response.isSuccessful()) {
-                            System.out.println("성공함");
+                            //System.out.println("성공함");
                         }
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-                        System.out.println("실패함");
+                        //System.out.println("실패함");
                     }
 
                 });
@@ -97,6 +92,7 @@ public class SubActivity extends AppCompatActivity {
                 Intent intent=new Intent(SubActivity.this,MainActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             }
         });
     }

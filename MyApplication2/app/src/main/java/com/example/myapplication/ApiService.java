@@ -24,47 +24,9 @@ public interface ApiService {
     @POST("/contacts/")
     Call<String> createPost(@Body Contact contact);
 
+    @DELETE("/contacts/")
+    Call<String> deletePost(@Query("pk") String pk);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    @DELETE("/contacts/{id}")
-//    Call<JsonArray> deletePost(@Path("id") int id);
-
-
-    //@PUT("/contacts")
-    //Call<JsonArray> putPost(@POST("id") int id, @Body Post post);
-
-//    //For Login
-//    @GET
-//    Call
-//    @FormUrlEncoded
-//    @POST("/users/login/{uid}&{email}&{method}&{nickname}")
-//    @FormUrlEncoded
     @POST("/users/login/")
     Call<String> login(@Body User user);
 

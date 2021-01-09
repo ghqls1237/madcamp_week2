@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.Telephony;
 import android.view.LayoutInflater;
@@ -46,6 +49,7 @@ import java.util.ArrayList;
 import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
+import com.google.android.gms.common.util.ArrayUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.JsonArray;
 
@@ -68,6 +72,7 @@ public class Fragment1 extends Fragment {
     private static String[] PICTURE;
     private static String[] NAME;
     private static String[] PHONE;
+    private static String[] PK;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -79,9 +84,9 @@ public class Fragment1 extends Fragment {
     private static String uid;
     String server_result;
 
-    ListViewAdapter adapter;
-    ListViewAdapter adapter2;
-
+    RecyclerView mRecyclerView = null ;
+    RecyclerViewAdapter mAdapter = null ;
+    ArrayList<RecyclerItem> mList = new ArrayList<RecyclerItem>();
 
 
 
@@ -99,17 +104,20 @@ public class Fragment1 extends Fragment {
         try {
             JSONArray jarray = new JSONArray(str);
             len = jarray.length();
+            PK = new String[len];
             PICTURE = new String[len];
             NAME = new String[len];
             PHONE = new String[len];
             for (int i=0;i<len;i++){
                 JSONObject jObject = jarray.getJSONObject(i);
 
+                String pk = jObject.getString("pkk");
                 String picture = jObject.getString("image");
                 String name = jObject.getString("name");
                 String phone = jObject.getString("phone");
-                uid = jObject.getString("user");
 
+
+                PK[i] = pk;
                 PICTURE[i] = picture;
                 NAME[i] = name;
                 PHONE[i] = phone;
@@ -123,6 +131,19 @@ public class Fragment1 extends Fragment {
     public Fragment1() {
         // Required empty public constructor
     }
+
+
+    public void addItem(Drawable icon, String title) {
+
+        RecyclerItem item = new RecyclerItem();
+
+        item.setIcon(icon);
+        item.setTitle(title);
+
+        mList.add(item);
+
+    }
+
 
     // TODO: Rename and change types and number of parameters
     public static Fragment1 newInstance(String param1, String param2) {
@@ -145,23 +166,39 @@ public class Fragment1 extends Fragment {
     }
 
 
+
+    public String[] remove_item(String[] arr, int index){
+        String[] result = new String[arr.length-1];
+
+        for (int i=0; i<arr.length; i++){
+            if (i < index){
+                result[i] = arr[i];
+            }
+            else if(i > index){
+                result[i-1] = arr[i];
+            }
+        }
+        return result;
+    }
+
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment\
 
-        View view = inflater.inflate(R.layout.fragment_1, null);
+        View view = inflater.inflate(R.layout.fragment_1, container,false);
 
-        adapter = new ListViewAdapter() ;
-        //adapter2 = new ListViewAdapter();
+        mRecyclerView = view.findViewById(R.id.recycler1) ;;
+        mAdapter = new RecyclerViewAdapter(mList) ;
+        mRecyclerView.setAdapter(mAdapter) ;
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity())) ;
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), 1));
 
-
-        ListView listview = (ListView) view.findViewById(R.id.listview1);
-        listview.setAdapter(adapter);
-
-
+        mAdapter.remove_all();
         RetrofitClient retrofitClient = new RetrofitClient();
-        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Call<JsonArray> call = retrofitClient.apiService.getretrofitdata(uid);
         call.enqueue(new Callback<JsonArray>() {
             @Override
@@ -176,13 +213,15 @@ public class Fragment1 extends Fragment {
                         e.printStackTrace();
                     }
 
-                    for (int i = 0; i < len; i++) {
-                        adapter.addItemLast(ContextCompat.getDrawable(getActivity(), R.drawable.human), NAME[i]);
+                    for (int i = 0; i<len; i++){
+                        addItem(getResources().getDrawable(R.drawable.human), NAME[i]);
                     }
 
-                    adapter.notifyDataSetChanged();
+                    mAdapter.notifyDataSetChanged();
+
                 }
             }
+
 
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
@@ -205,6 +244,46 @@ public class Fragment1 extends Fragment {
         });
 
 
+        mAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener(){
+
+            @Override
+            public void onItemClick(View v, int position) {
+                new AlertDialog.Builder(getActivity())
+                        .setNeutralButton("delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                System.out.println("PK = " + PK[position]);
+
+                                remove_item(NAME,position);
+                                remove_item(PK,position);
+                                remove_item(PHONE,position);
+                                remove_item(PICTURE,position);
+
+                                mAdapter.remove_item(position);
+                                mAdapter.notifyDataSetChanged();
+
+
+                                RetrofitClient retrofitClient = new RetrofitClient();
+                                Call<String> call = retrofitClient.apiService.deletePost(PK[position]);
+                                call.enqueue(new Callback<String>() {
+                                    @Override
+                                    public void onResponse(Call<String> call, Response<String> response) {
+                                        if (response.isSuccessful()) {
+                                            System.out.println("성공함");
+                                        }
+                                    }
+                                    @Override
+                                    public void onFailure(Call<String> call, Throwable t) {
+
+                                        System.out.println("실패함");
+                                    }
+                                });
+
+                            }
+                        })
+                .show();
+            }
+        });
 
 
         return view;
