@@ -38,18 +38,18 @@ public class Fragment3 extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_3, null);
-        Button logoutBtn = view.findViewById(R.id.logout_btn);
-        logoutBtn.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                Log.d("Button", "Click");
-                FirebaseAuth.getInstance().signOut();
-                LoginManager.getInstance().logOut();
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
-        });
+//        Button logoutBtn = view.findViewById(R.id.logout_btn);
+//        logoutBtn.setOnClickListener(new Button.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                Log.d("Button", "Click");
+//                FirebaseAuth.getInstance().signOut();
+//                LoginManager.getInstance().logOut();
+//                Intent intent = new Intent(getActivity(), LoginActivity.class);
+//                startActivity(intent);
+//                getActivity().finish();
+//            }
+//        });
         return view;
     }
 }
