@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def images(request):
+    if request.method == "POST":
+        print("images POST!!")
+    elif request.method == "GET":
+        print("image GET!!")
