@@ -4,11 +4,11 @@ import android.graphics.Bitmap;
 
 public class GridItem {
     public Bitmap image;
-    public int idx;
+    public String pk;
 
 
-    public GridItem(Bitmap image, int idx){
+    public GridItem(Bitmap image, String pk){
         this.image = image;
-        this.idx = idx;
+        this.pk = pk;
     }
 }
