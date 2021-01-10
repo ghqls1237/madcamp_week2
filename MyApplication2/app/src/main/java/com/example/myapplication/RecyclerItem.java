@@ -2,15 +2,16 @@ package com.example.myapplication;
 
 import android.graphics.drawable.Drawable;
 
-public class ListViewItem {
-    private Drawable iconDrawable ;
-    private String titleStr ;
+public class RecyclerItem {
+    private Drawable iconDrawable;
+    private String titleStr;
 
-    public void setIcon(Drawable icon) {
-        iconDrawable = icon ;
+    public void setIcon(Drawable icon){
+        iconDrawable = icon;
     }
-    public void setTitle(String title) {
-        titleStr = title ;
+
+    public void setTitle(String title){
+        titleStr = title;
     }
 
     public Drawable getIcon() {
@@ -19,4 +20,6 @@ public class ListViewItem {
     public String getTitle() {
         return this.titleStr ;
     }
+
+
 }

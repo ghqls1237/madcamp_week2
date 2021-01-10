@@ -123,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     String uid = auth.getCurrentUser().getUid();
                     String method =  auth.getCurrentUser().getProviderData().get(1).getProviderId().toString().toLowerCase();
                     User user = new User(uid, email, method, displayName);
+
                     //Retrofit use
                     Call<String> call = retrofitClient.apiService.login(user);
                     call.enqueue(new Callback<String>() {

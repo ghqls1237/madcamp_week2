@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from . import serializers
 
 @csrf_exempt
-@api_view(["GET", "POST"])
+@api_view(["GET", "POST", "DELETE"])
 def images(request):
     if request.method == "POST":
         params_json = request.body.decode(encoding = "utf-8")
@@ -20,7 +20,7 @@ def images(request):
             image = data_json["image"]
             image_obj = image_models.Image.objects.create(image=image, user=user)
             image_obj.save()
-            return Response("{Result:Success}")
+            return Response(f"{image_obj.pk}")
         except:
             # user does not exists error
             print("ERROR : User Does not exists")
@@ -32,3 +32,12 @@ def images(request):
         serializer = serializers.ImageSerializer(queryset, many=True)
         
         return Response(serializer.data)
+    
+    elif request.method == "DELETE":
+        pk = request.GET.get("pk")
+        try:
+            image = image_models.Image.objects.get(pk=pk)
+            image.delete()
+            Response("{Result:Success}")
+        except:
+            return Response("{Result:Error}")

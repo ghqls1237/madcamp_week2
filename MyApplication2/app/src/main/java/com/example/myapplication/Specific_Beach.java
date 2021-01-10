@@ -46,7 +46,6 @@ public class Specific_Beach extends AppCompatActivity {
                 for (int i=0; i<content.size(); i++){
                     beach = content.get(i).select("h4").text();
                     wave_height = content2.get(i).text();
-
                     arrayList.add(new wsb_beach(beach,wave_height));
                 }
 
