@@ -46,7 +46,11 @@ PROJECT_APPS = [
     "core.apps.CoreConfig",
     "users.apps.UsersConfig",
     "images.apps.ImagesConfig",
-    "contacts.apps.ContactsConfig"
+    "contacts.apps.ContactsConfig",
+    "seas.apps.SeasConfig",
+    "beaches.apps.BeachesConfig",
+    "posts.apps.PostsConfig",
+    "comments.apps.CommentsConfig",
 ]
 
 
