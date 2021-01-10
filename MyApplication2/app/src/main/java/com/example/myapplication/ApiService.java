@@ -42,4 +42,9 @@ public interface ApiService {
     @GET("/users/login")
     Call<String> login_get();
 
+    @POST("/posts/")
+    Call<String> createPost(@Body Post post);
+
+    @GET("/posts/")
+    Call<JsonArray> getPosts(@Query("beach") String beach);
 }

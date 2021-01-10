@@ -10,3 +10,13 @@ class Post(core_models.TimeStampedModel):
 
     def __str__(self):
         return f"{self.user.username}'s post : {self.title}"
+
+    def serialize_custom(self):
+        data = {
+            "user" : self.user.username,
+            "title": self.title,
+            "date": self.created,
+            "text": self.text,
+            "post_pk": self.pk
+        }
+        return data
