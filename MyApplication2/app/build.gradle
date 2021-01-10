@@ -48,6 +48,8 @@ dependencies {
 
     //recyclerView
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    
+    
 
     //firebase
     implementation platform('com.google.firebase:firebase-bom:26.1.0')
@@ -60,4 +62,8 @@ dependencies {
     androidTestImplementation 'androidx.tst.espresso:espresso-core:3.3.0e'
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+
+    //Jsoup -> 웹 크롤링
+    implementation 'org.jsoup:jsoup:1.12.2'
+    
 }

@@ -23,7 +23,7 @@ public class VPAdapter extends FragmentPagerAdapter {
 
         itext.add("Address");
         itext.add("Gallery");
-        itext.add("Banlance Game");
+        itext.add("For Surfers");
     }
 
     @Nullable
