@@ -30,6 +30,12 @@ public interface ApiService {
     @GET("/images/")
     Call<JsonArray> getImages(@Query("uid") String uid);
 
+    @DELETE("/images/")
+    Call<String> deleteImages(@Query("pk") String pk);
+
+    @DELETE("/contacts/")
+    Call<String> deletePost(@Query("pk") String pk);
+
     @POST("/users/login/")
     Call<String> login(@Body User user);
 

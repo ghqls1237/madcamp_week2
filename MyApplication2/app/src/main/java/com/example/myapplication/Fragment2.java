@@ -48,7 +48,7 @@ import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 
-public class Fragment2 extends Fragment {
+public class Fragment2 extends Fragment{
 
     ArrayList<GridItem> image_list = new ArrayList<GridItem>();
     int columns = 3;
@@ -82,11 +82,12 @@ public class Fragment2 extends Fragment {
                     JsonArray jsonArr = response.body();
                     for(JsonElement item : jsonArr){
                         String data = item.getAsJsonObject().get("image").getAsString();
+                        String pk = item.getAsJsonObject().get("pk").getAsString();
 //                        Log.d("Element", data);
                         byte[] bytePlainOrg = Base64.getDecoder().decode(data);
                         ByteArrayInputStream inputStream = new ByteArrayInputStream(bytePlainOrg);
                         Bitmap bitmap = BitmapFactory.decodeStream((inputStream));
-                        recyclerViewAdapter.addItem(new GridItem(bitmap, recyclerViewAdapter.getItemCount()));
+                        recyclerViewAdapter.addItem(new GridItem(bitmap, pk));
                     }
                 }
             }
@@ -123,7 +124,7 @@ public class Fragment2 extends Fragment {
                     InputStream in = getActivity().getContentResolver().openInputStream(data.getData());
 
                     Bitmap bitmap = BitmapFactory.decodeStream(in);
-                    Bitmap bmpCompressed = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Bitmap bmpCompressed = Bitmap.createScaledBitmap(bitmap, 300, 300, true);
                     in.close();
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     bmpCompressed.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
@@ -137,17 +138,17 @@ public class Fragment2 extends Fragment {
                     call.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
-                            System.out.println("login 통신 성공함");
+                            String pk = response.body();
+                            Log.d("image", "통신 성공함");
+                            recyclerViewAdapter.addItem(new GridItem(bitmap, pk));
                         }
 
                         @Override
                         public void onFailure(Call<String> call, Throwable t) {
-                            System.out.println("login 통신 실패");
+                            Log.d("image", "통신 실패");
                         }
-
                     });
 
-                    recyclerViewAdapter.addItem(new GridItem(bitmap, recyclerViewAdapter.getItemCount()));
                 }catch(Exception e)
                 {
 
