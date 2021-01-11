@@ -37,9 +37,19 @@ def posts(request):
         pk = int(beach)
         beach_obj = beach_models.Beach.objects.get(pk=pk)
         # queryset = beach_obj.posts.all()
-        queryset = post_models.Post.objects.filter(beach=beach_obj)
+        queryset = post_models.Post.objects.filter(beach=beach_obj).order_by("-created")
         post_serialized = []
         for q in queryset:
             post_serialized.append(q.serialize_custom())
         # serializer = (queryset, many=True)
         return Response(post_serialized)
+
+
+@csrf_exempt
+@api_view(["GET"])
+def get_post(request):
+    if request.method == "GET":
+        pk = request.GET.get("pk")
+        post = post_models.Post.objects.get(pk=pk)
+        serialized_post = post.serialize_custom()
+        return Response(serialized_post)

@@ -9,3 +9,12 @@ class Comment(core_models.TimeStampedModel):
     
     def __str__(self):
         return f"{self.user.username}'s comment on {self.post.title}"
+
+    def serialize_custom(self):
+        data = {
+            "text" : self.text,
+            "user" : self.user.username,
+            "pk" : self.pk,
+            "date" : self.created
+        }
+        return data

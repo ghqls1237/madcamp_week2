@@ -40,10 +40,24 @@ public class PostListActivity extends AppCompatActivity {
         postRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         postRecyclerView.setAdapter(postLinearAdapter);
 
+
         //get beach information
         Intent intent = getIntent();
         beach = intent.getStringExtra("beach");
+        beach = "1"; //should be removed
 
+
+        postLinearAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View v, int position) {
+                PostItem postItem = postLinearAdapter.getItem(position);
+//                Log.d("get post", "pk : " + postItem.pk + " title : " + postItem.title);
+                Intent intent = new Intent(getApplicationContext(), PostDetailActivity.class);
+                intent.putExtra("post_pk", postItem.pk);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         Call<JsonArray> call = retrofitClient.apiService.getPosts(beach);
         call.enqueue(new Callback<JsonArray>() {

@@ -4,5 +4,6 @@ from . import views
 app_name = "posts"
 
 urlpatterns = [
-    path("", views.posts, name="posts")
+    path("", views.posts, name="posts"),
+    path("detail/", views.get_post, name="get-post")
 ]
