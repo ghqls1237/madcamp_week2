@@ -1,8 +1,8 @@
 from django.db import models
-from core import models as core_models
 
 # Create your models here.
-class Beach(core_models.TimeStampedModel):
+class Beach(models.Model):
+    pkk = models.IntegerField(primary_key = True)
     name = models.CharField(max_length=50, unique=True, blank=False, null=False)
     sea = models.ForeignKey("seas.Sea", on_delete=models.CASCADE, related_name="beaches")
 
