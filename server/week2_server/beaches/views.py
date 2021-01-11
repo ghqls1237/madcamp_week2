@@ -16,6 +16,7 @@ from seas import models as seas
 def beaches_view(request):
     if request.method == "GET": # 정보 가져오기
         pkk = request.GET.get("pkk")
+        print("pkk", pkk)
         sea = seas.Sea.objects.get(pkk = pkk )
         queryset = beaches.Beach.objects.filter(sea = sea)
         serializer = BeachSerializer(queryset, many=True)

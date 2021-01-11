@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +32,9 @@ public class PostListActivity extends AppCompatActivity {
 //    public PostItem(String user, String title, String date, String pk, String text) {
     RetrofitClient retrofitClient = new RetrofitClient();
     String beach;
+    String sea_pk;
+    String beach_title;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +49,11 @@ public class PostListActivity extends AppCompatActivity {
         //get beach information
         Intent intent = getIntent();
         beach = intent.getStringExtra("beach");
-        beach = "1"; //should be removed
+        sea_pk = intent.getStringExtra("sea");
+        beach_title = intent.getStringExtra("title");
 
+        TextView title_temp = findViewById(R.id.beach_title);
+        title_temp.setText(beach_title);
 
         postLinearAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -54,10 +62,25 @@ public class PostListActivity extends AppCompatActivity {
 //                Log.d("get post", "pk : " + postItem.pk + " title : " + postItem.title);
                 Intent intent = new Intent(getApplicationContext(), PostDetailActivity.class);
                 intent.putExtra("post_pk", postItem.pk);
+                intent.putExtra("beach", beach);
+                intent.putExtra("pkk", sea_pk);
+                intent.putExtra("beach_title", beach_title);
                 startActivity(intent);
                 finish();
             }
         });
+
+        Button to_beaches_btn = findViewById(R.id.to_beaches_btn);
+        to_beaches_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Specific_Beach.class);
+                intent.putExtra("pkk", sea_pk);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 
         Call<JsonArray> call = retrofitClient.apiService.getPosts(beach);
         call.enqueue(new Callback<JsonArray>() {
@@ -155,6 +178,8 @@ public class PostListActivity extends AppCompatActivity {
                Intent intent = new Intent(getApplicationContext(), CreatePostActivity.class);
                //should change
                intent.putExtra("beach", beach);
+               intent.putExtra("pkk", sea_pk);
+               intent.putExtra("beach_title", beach_title);
                startActivity(intent);
                finish();
            }

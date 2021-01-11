@@ -34,11 +34,6 @@ public class Specific_Beach extends AppCompatActivity {
     Elements content3 = null;
     private static String pkk;
 
-    String[] EastSea = {"고성 송지호해변","고성 천진해변","속초 속초해변","양양 물치해변","양양 설악해변", "양양 기사문해변", "양양 동산해변", "양양 죽도해변", "양양 인구해변", "양양 남애3리해변","양양 남애1리해변","강릉 주문진해변","강릉 사천해변","강릉 금진해변","동해 대진해변","삼척 용화해변","포항 신항만해변","울산 진하해변"};
-    String[] SouthSea = {"부산 송정해변","고흥 남열 해돋이해변"};
-    String[] Jeju = {"제주 중문해변","제주 중문 듀크포인트","제주 사계해변","제주 곽지해변","제주 이호테우해변","제주 월정해변","제주 쇠소깍해변"};
-    String[] WestSea = {"태안 만리포해변"};
-
     private static String[] pkk_server;
     private static String[] beach_server;
 
@@ -92,7 +87,7 @@ public class Specific_Beach extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        pkk = intent.getStringExtra("pkk");
+        pkk = intent.getStringExtra("pkk"); //바다 pkk
 
         regionData task = new regionData();
         task.execute();
@@ -159,9 +154,12 @@ public class Specific_Beach extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-//                Intent intent = new Intent(Specific_Beach.class,Wonjin.class);
-//                intent.putExtra("pkk",pkk_server[position]);
-//                startActivity(intent);
+                Intent intent = new Intent(Specific_Beach.this,PostListActivity.class);
+                intent.putExtra("beach",pkk_server[position]);
+                intent.putExtra("sea", pkk);
+                intent.putExtra("title",beach_server[position]);
+                startActivity(intent);
+                finish();
             }
         });
 

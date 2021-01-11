@@ -32,6 +32,9 @@ import retrofit2.Response;
 
 public class PostDetailActivity extends AppCompatActivity {
     private String pk;
+    String pkk; //sea
+    String beach; //beach
+    String beach_title;
     RetrofitClient retrofitClient = new RetrofitClient();
     RecyclerView commentRecyclerView;
     CommentLinearAdapter commentLinearAdapter = new CommentLinearAdapter();
@@ -42,6 +45,9 @@ public class PostDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post_detail);
         Intent intent = getIntent();
         pk = intent.getStringExtra("post_pk");
+        pkk = intent.getStringExtra("pkk");
+        beach = intent.getStringExtra("beach");
+        beach_title = intent.getStringExtra("beach_title");
 
         TextView title = findViewById(R.id.post_detail_title);
         TextView text = findViewById(R.id.post_detail_text);
@@ -53,6 +59,9 @@ public class PostDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), PostListActivity.class);
+                intent.putExtra("beach", beach);
+                intent.putExtra("sea", pkk);
+                intent.putExtra("title", beach_title);
                 startActivity(intent);
                 finish();
             }

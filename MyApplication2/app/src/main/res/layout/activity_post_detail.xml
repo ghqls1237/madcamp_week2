@@ -22,7 +22,6 @@
         <TextView
             android:layout_width="0dp"
             android:layout_weight="8"
-            android:text="Test"
             android:autoSizeTextType="uniform"
             android:gravity="center"
             android:layout_height="match_parent"/>
