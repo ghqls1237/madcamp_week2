@@ -37,6 +37,9 @@ import com.facebook.login.LoginManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.JsonArray;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -59,17 +62,49 @@ public class Fragment3 extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static String[] PKK;
+    private static String[] sea;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     myAdapter adapter;
-    String[] location = {"동해","남해","제주","서해"};
+    //String[] sea = new String[4];
 
+    String server_result = null;
 
     public Fragment3() {
         // Required empty public constructor
+    }
+
+    //json 파싱하기
+    void doJSONParser() throws IOException {
+        // json 데이터
+
+        StringBuffer sb = new StringBuffer();
+
+        String str = server_result;
+
+        try {
+            JSONArray jarray = new JSONArray(str);
+            int len = jarray.length();
+            PKK = new String[len];
+            sea = new String[len];
+
+            for (int i=0;i<len;i++){
+                JSONObject jObject = jarray.getJSONObject(i);
+
+                String pk = jObject.getString("pkk");
+                String name = jObject.getString("name");
+
+                PKK[i] = pk;
+                sea[i] = name;
+                //append("name:"+name+", phone:"+ phone);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -107,12 +142,12 @@ public class Fragment3 extends Fragment {
 
         @Override
         public int getCount() {
-            return location.length;
+            return sea.length;
         }
 
         @Override
         public Object getItem(int position) {
-            return location[position];
+            return sea[position];
         }
 
         @Override
@@ -123,7 +158,7 @@ public class Fragment3 extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView view = new TextView(getActivity().getApplicationContext());
-            view.setText(location[position]);
+            view.setText(sea[position]);
             view.setTextSize(30.0f);
             view.setGravity(Gravity.CENTER);
             view.setTextColor(Color.BLACK);
@@ -139,15 +174,38 @@ public class Fragment3 extends Fragment {
 
         ListView listView = (ListView) view.findViewById(R.id.listView_tab3);
 
-        adapter = new myAdapter();
 
-        listView.setAdapter(adapter);
+        RetrofitClient retrofitClient = new RetrofitClient();
+        Call<JsonArray> call = retrofitClient.apiService.getSeas();
+        call.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                if (response.isSuccessful()) {
+                    server_result = response.body().toString();
+                    System.out.println("성공함");
+                    try {
+                        doJSONParser();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    adapter = new myAdapter();
+                    listView.setAdapter(adapter);
+                }
+            }
+
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                System.out.println("실패함");
+            }
+        });
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(),Specific_Beach.class);
-                intent.putExtra("position",position);
+                intent.putExtra("pkk",PKK[position]);
                 startActivity(intent);
 
             }

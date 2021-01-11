@@ -205,7 +205,7 @@ public class Fragment1 extends Fragment {
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 if (response.isSuccessful()) {
                     server_result = response.body().toString();
-                    System.out.println("result : " + server_result);
+                    //System.out.println("result : " + server_result);
 
                     try {
                         doJSONParser();

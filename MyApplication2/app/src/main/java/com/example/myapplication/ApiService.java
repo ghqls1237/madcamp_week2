@@ -42,4 +42,11 @@ public interface ApiService {
     @GET("/users/login")
     Call<String> login_get();
 
+    @GET("/seas/")
+    Call<JsonArray> getSeas();
+
+    @GET("/beaches/")
+    Call<JsonArray> getBeaches(@Query("pkk") String pkk);
+
+
 }
