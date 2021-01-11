@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,13 @@ import java.util.ArrayList;
 public class PostLinearAdapter extends RecyclerView.Adapter<PostLinearAdapter.MyViewHolder> {
     ArrayList<PostItem> posts = new ArrayList<PostItem>();
 
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position) ;
+    }
+
+    // 리스너 객체 참조를 저장하는 변수
+    private RecyclerViewAdapter.OnItemClickListener mListener = null ;
 
     @NonNull
     @Override
@@ -37,6 +45,10 @@ public class PostLinearAdapter extends RecyclerView.Adapter<PostLinearAdapter.My
         holder.text.setText(postText);
     }
 
+    public PostItem getItem(int pos){
+        return posts.get(pos);
+    }
+
     @Override
     public int getItemCount() {
         return posts.size();
@@ -46,6 +58,11 @@ public class PostLinearAdapter extends RecyclerView.Adapter<PostLinearAdapter.My
         Log.d("AddPost", "Item");
         posts.add(postItem);
         notifyDataSetChanged();
+    }
+
+    // OnItemClickListener 리스너 객체 참조를 어댑터에 전달하는 메서드
+    public void setOnItemClickListener(RecyclerViewAdapter.OnItemClickListener listener) {
+        this.mListener = listener ;
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{
@@ -59,6 +76,19 @@ public class PostLinearAdapter extends RecyclerView.Adapter<PostLinearAdapter.My
             title = itemView.findViewById(R.id.post_title);
             date = itemView.findViewById(R.id.post_date);
             text = itemView.findViewById(R.id.post_text);
+
+            itemView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    int pos = getAdapterPosition();
+
+                    if (pos != RecyclerView.NO_POSITION) {
+                        if (mListener != null) {
+                            mListener.onItemClick(v, pos);
+                        }
+                    }
+                }
+            });
         }
     }
 }

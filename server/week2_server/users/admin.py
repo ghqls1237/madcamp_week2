@@ -7,6 +7,7 @@ from . import models
 class UserAdmin(UserAdmin):
     fieldsets = UserAdmin.fieldsets + (("CustomProfile", {
         "fields": (
+        
             "nickname",
             "login_method",
             "uid",
@@ -14,7 +15,7 @@ class UserAdmin(UserAdmin):
     }), )
 
     list_display = (
-        "email",
+        "username",
         "nickname",
         "login_method",
     )

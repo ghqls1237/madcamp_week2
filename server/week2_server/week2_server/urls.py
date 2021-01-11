@@ -26,6 +26,8 @@ urlpatterns = [
     path('images/', include("images.urls")),
     path('seas/', include("seas.urls")),
     path('beaches/', include("beaches.urls")),
+    path('posts/', include("posts.urls")),
+    path('comments/', include("comments.urls")),
 ]
 
 if settings.DEBUG:

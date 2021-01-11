@@ -5,6 +5,10 @@ import android.icu.lang.UCharacter;
 import androidx.core.content.res.FontResourcesParserCompat;
 
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -48,5 +52,19 @@ public interface ApiService {
     @GET("/beaches/")
     Call<JsonArray> getBeaches(@Query("pkk") String pkk);
 
+    @POST("/posts/")
+    Call<String> createPost(@Body Post post);
+
+    @GET("/posts/")
+    Call<JsonArray> getPosts(@Query("beach") String beach);
+
+    @GET("/posts/detail/")
+    Call<PostItem> getPostDetail(@Query("pk") String pk);
+
+    @GET("/comments/")
+    Call<ArrayList<CommentItem>> getComments(@Query("pk") String pk);
+
+    @POST("/comments/")
+    Call<CommentItem> postComment(@Body PostCommentItem comment);
 
 }
