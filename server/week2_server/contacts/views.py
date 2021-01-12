@@ -26,14 +26,13 @@ def contact_view(request):
     elif request.method == "POST": # 정보 추가하기
         params_json = request.body.decode(encoding = "utf-8")
         data_json = json.loads(request.body)
-        print(data_json)
         name = data_json["name"]
         phone = data_json["phone"]
         image = data_json["image"]
         uid = data_json["uid"]
         user = user_models.User.objects.get(uid=uid)
         contact = contacts.Contact.objects.create(name = name, phone = phone, image = image, user = user)
-        print("method is POST")
+
         return Response("{Result:Post}")
         
     elif request.method == "DELETE": # 정보 삭제하기

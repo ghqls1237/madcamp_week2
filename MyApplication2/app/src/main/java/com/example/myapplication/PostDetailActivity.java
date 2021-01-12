@@ -54,6 +54,9 @@ public class PostDetailActivity extends AppCompatActivity {
         TextView date = findViewById(R.id.post_detail_date);
         TextView user = findViewById(R.id.post_detai_user);
 
+
+        //뒤로 가기 버튼
+
         Button backBtn = findViewById(R.id.to_post_list_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,6 +84,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 if(send_text != "") {
                     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     String post = pk;
+
                     PostCommentItem comment = new PostCommentItem(uid, send_text, post);
                     Call<CommentItem> call2 = retrofitClient.apiService.postComment(comment);
                     commentText.setText(null);
@@ -116,6 +120,7 @@ public class PostDetailActivity extends AppCompatActivity {
                                 SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd:HH-mm-ss");
                                 Date time = new Date();
                                 String current = format1.format(time);
+                                Log.d("Current Time", current.toString());
                                 String[] current_date_splited = current.split(":");
                                 String[] current_date = current_date_splited[0].split("-");
                                 String[] current_time = current_date_splited[1].split("-");
