@@ -51,6 +51,7 @@ PROJECT_APPS = [
     "beaches.apps.BeachesConfig",
     "posts.apps.PostsConfig",
     "comments.apps.CommentsConfig",
+    "notifications.apps.NotificationsConfig",
 ]
 
 
