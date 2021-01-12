@@ -67,5 +67,7 @@ public interface ApiService {
     @POST("/comments/")
     Call<CommentItem> postComment(@Body PostCommentItem comment);
 
+    @GET("/notifications/")
+    Call<ArrayList<NotiItem>> getNotis(@Query("uid") String uid);
 
 }
