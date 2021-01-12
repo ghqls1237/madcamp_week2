@@ -35,6 +35,7 @@ public class PostDetailActivity extends AppCompatActivity {
     String pkk; //sea
     String beach; //beach
     String beach_title;
+    String sea_temp_name;
     RetrofitClient retrofitClient = new RetrofitClient();
     RecyclerView commentRecyclerView;
     CommentLinearAdapter commentLinearAdapter = new CommentLinearAdapter();
@@ -49,6 +50,7 @@ public class PostDetailActivity extends AppCompatActivity {
         pkk = intent.getStringExtra("pkk"); //sea
         beach = intent.getStringExtra("beach"); //beach
         beach_title = intent.getStringExtra("beach_title"); //beach_name
+        sea_temp_name = intent.getStringExtra("sea_name");
 
         TextView title = findViewById(R.id.post_detail_title);
         TextView text = findViewById(R.id.post_detail_text);
@@ -57,7 +59,6 @@ public class PostDetailActivity extends AppCompatActivity {
 
 
         //뒤로 가기 버튼
-
         Button backBtn = findViewById(R.id.to_post_list_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +67,7 @@ public class PostDetailActivity extends AppCompatActivity {
                 intent.putExtra("beach", beach);
                 intent.putExtra("sea", pkk);
                 intent.putExtra("title", beach_title);
+                intent.putExtra("sea_name", sea_temp_name);
                 startActivity(intent);
                 finish();
             }

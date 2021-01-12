@@ -31,14 +31,14 @@ def comments(request):
         text = data_json["text"]
 
         try:
-            user = user_models.User.objects.get(uid=uid)
+            user = user_models.User.objects.get(uid=uid) # comment를 단사람
             post = post_models.Post.objects.get(pk=post_pk)
             post_owner = post.user
             post_comments = post.comments.all()
             post_comments_users = []
             print(post_comments)
             for comment in post_comments:
-                if(comment.user != user):
+                if((comment.user != user) and (post_owner != comment.user)):
                     if(comment.user in post_comments_users):
                         continue
                     else:
@@ -49,7 +49,7 @@ def comments(request):
                 post_comments_users.append(post_owner)
 
             for user_temp in post_comments_users:
-                noti = notification_models.Notification.objects.create(post=post, user=user_temp)
+                noti = notification_models.Notification.objects.create(post=post, user=user_temp, from_user=user.username)
                 noti.save()
     
             comment = comment_models.Comment.objects.create(text=text, user=user, post=post)

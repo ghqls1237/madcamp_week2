@@ -168,6 +168,7 @@ public class Specific_Beach extends AppCompatActivity {
                 intent.putExtra("beach",pkk_server[position]);
                 intent.putExtra("sea", pkk);
                 intent.putExtra("title",beach_server[position]);
+                intent.putExtra("sea_name",sea_name);
                 startActivity(intent);
                 finish();
             }

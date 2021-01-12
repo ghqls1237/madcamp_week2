@@ -68,6 +68,6 @@ public interface ApiService {
     Call<CommentItem> postComment(@Body PostCommentItem comment);
 
     @GET("/notifications/")
-    Call<ArrayList<NotiItem>> getNotis(@Query("uid") String uid);
+    Call<JsonArray> getNotis(@Query("uid") String uid);
 
 }

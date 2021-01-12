@@ -34,7 +34,7 @@ public class PostListActivity extends AppCompatActivity {
     String beach;
     String sea_pk;
     String beach_title;
-
+    String sea_temp_name;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +51,8 @@ public class PostListActivity extends AppCompatActivity {
         beach = intent.getStringExtra("beach");
         sea_pk = intent.getStringExtra("sea");
         beach_title = intent.getStringExtra("title");
-
+        sea_temp_name = intent.getStringExtra("sea_name");
+        System.out.println("sea is : " + sea_temp_name);
         TextView title_temp = findViewById(R.id.beach_title);
         title_temp.setText(beach_title);
 
@@ -65,6 +66,7 @@ public class PostListActivity extends AppCompatActivity {
                 intent.putExtra("beach", beach);
                 intent.putExtra("pkk", sea_pk);
                 intent.putExtra("beach_title", beach_title);
+                intent.putExtra("sea_name", sea_temp_name);
                 startActivity(intent);
                 finish();
             }
@@ -76,6 +78,7 @@ public class PostListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), Specific_Beach.class);
                 intent.putExtra("pkk", sea_pk);
+                intent.putExtra("sea", sea_temp_name);
                 startActivity(intent);
                 finish();
             }
@@ -180,6 +183,7 @@ public class PostListActivity extends AppCompatActivity {
                intent.putExtra("beach", beach);
                intent.putExtra("pkk", sea_pk);
                intent.putExtra("beach_title", beach_title);
+               intent.putExtra("sea_name", sea_temp_name);
                startActivity(intent);
                finish();
            }

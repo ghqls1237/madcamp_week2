@@ -24,6 +24,7 @@ public class CreatePostActivity extends AppCompatActivity {
     RetrofitClient retrofitClient = new RetrofitClient();
     String sea_pkk;
     String beach_title;
+    String sea_temp_name;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +34,7 @@ public class CreatePostActivity extends AppCompatActivity {
         beach = intent.getStringExtra("beach");
         sea_pkk = intent.getStringExtra("pkk");
         beach_title = intent.getStringExtra("beach_title");
+        sea_temp_name = intent.getStringExtra("sea_name");
 
         editTitle = findViewById(R.id.create_post_title);
         editText = findViewById(R.id.create_post_text);
@@ -45,6 +47,7 @@ public class CreatePostActivity extends AppCompatActivity {
                 intent.putExtra("beach", beach);
                 intent.putExtra("sea", sea_pkk);
                 intent.putExtra("title", beach_title);
+                intent.putExtra("sea_name", sea_temp_name);
                 startActivity(intent);
                 finish();
             }
@@ -68,6 +71,7 @@ public class CreatePostActivity extends AppCompatActivity {
                             intent.putExtra("beach", beach);
                             intent.putExtra("sea", sea_pkk);
                             intent.putExtra("title", beach_title);
+                            intent.putExtra("sea_name", sea_temp_name);
                             startActivity(intent);
                             finish();
                         }
