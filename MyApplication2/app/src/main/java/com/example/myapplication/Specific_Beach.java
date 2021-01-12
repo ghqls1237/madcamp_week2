@@ -109,7 +109,7 @@ public class Specific_Beach extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         try {
-            Thread.sleep(800);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -132,6 +132,9 @@ public class Specific_Beach extends AppCompatActivity {
                     level_server = new String[beach_server.length];
                     wave_server = new String[beach_server.length];
 
+//                    for (int i=0; i < beach_wsb.length; i++){
+//                        System.out.println(beach_wsb[i]);
+//                    }
 
                     adapter.delete_all();
                     for (int i = 0 ;i<beach_server.length;i++){
@@ -222,6 +225,8 @@ public class Specific_Beach extends AppCompatActivity {
                     beach_wsb[i] = arrayList.get(i).get_location();
                     level_wsb[i] = arrayList.get(i).get_comment();
                     wave_wsb[i] = arrayList.get(i).getWave_height();
+
+                    System.out.println("크롤링");
                 }
             }
         }

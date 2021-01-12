@@ -44,10 +44,11 @@ public class PostDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_detail);
         Intent intent = getIntent();
-        pk = intent.getStringExtra("post_pk");
-        pkk = intent.getStringExtra("pkk");
-        beach = intent.getStringExtra("beach");
-        beach_title = intent.getStringExtra("beach_title");
+
+        pk = intent.getStringExtra("post_pk"); //post
+        pkk = intent.getStringExtra("pkk"); //sea
+        beach = intent.getStringExtra("beach"); //beach
+        beach_title = intent.getStringExtra("beach_title"); //beach_name
 
         TextView title = findViewById(R.id.post_detail_title);
         TextView text = findViewById(R.id.post_detail_text);
