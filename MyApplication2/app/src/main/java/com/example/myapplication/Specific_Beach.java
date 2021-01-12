@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.gson.JsonArray;
 
@@ -33,6 +35,7 @@ public class Specific_Beach extends AppCompatActivity {
     Elements content2 = null;
     Elements content3 = null;
     private static String pkk;
+    private static String sea_name;
 
     private static String[] pkk_server;
     private static String[] beach_server;
@@ -88,6 +91,10 @@ public class Specific_Beach extends AppCompatActivity {
 
         Intent intent = getIntent();
         pkk = intent.getStringExtra("pkk"); //바다 pkk
+        sea_name = intent.getStringExtra("sea");
+
+        TextView textView = findViewById(R.id.sea_name);
+        textView.setText(sea_name);
 
         regionData task = new regionData();
         task.execute();
@@ -132,7 +139,7 @@ public class Specific_Beach extends AppCompatActivity {
                             if (beach_wsb[j] != null && beach_wsb[j].contains(beach_server[i])){
                                 level_server[i] = level_wsb[j];
                                 wave_server[i] = wave_wsb[j];
-                                adapter.addItem(beach_server[i],wave_server[i],level_server[i]);
+                                adapter.addItem("["+beach_server[i]+"]",wave_server[i],level_server[i]);
                                 break;
                             }
                         }
@@ -160,6 +167,16 @@ public class Specific_Beach extends AppCompatActivity {
                 intent.putExtra("title",beach_server[position]);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        Button button5 = findViewById(R.id.specific_beach_back);
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Specific_Beach.this,MainActivity.class);
+            
+                startActivity(intent);
             }
         });
 

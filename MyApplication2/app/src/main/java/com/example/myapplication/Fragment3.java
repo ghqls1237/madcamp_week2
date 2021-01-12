@@ -172,7 +172,6 @@ public class Fragment3 extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_3, null);
 
-        ListView listView = (ListView) view.findViewById(R.id.listView_tab3);
 
 
         RetrofitClient retrofitClient = new RetrofitClient();
@@ -182,34 +181,103 @@ public class Fragment3 extends Fragment {
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 if (response.isSuccessful()) {
                     server_result = response.body().toString();
-                    System.out.println("성공함");
                     try {
                         doJSONParser();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    adapter = new myAdapter();
-                    listView.setAdapter(adapter);
+//                    adapter = new myAdapter();
+//                    listView.setAdapter(adapter);
                 }
             }
 
 
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
-                System.out.println("실패함");
+
             }
         });
 
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        //+ add address 구현하기
+        Button button1 = view.findViewById(R.id.east_sea);
+        button1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView parent, View view, int position, long id) {
+            public void onClick(View view) {
                 Intent intent = new Intent(getActivity(),Specific_Beach.class);
-                intent.putExtra("pkk",PKK[position]);
+                for (int i = 0; i<sea.length;i++){
+                    if (sea[i].equals("동해")){
+                        intent.putExtra("pkk",PKK[i]);
+                        intent.putExtra("sea",sea[i]);
+                        break;
+                    }
+                }
                 startActivity(intent);
-
             }
         });
+
+        //+ add address 구현하기
+        Button button2 = view.findViewById(R.id.west_sea);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),Specific_Beach.class);
+                for (int i = 0; i<sea.length;i++){
+                    if (sea[i].equals("서해")){
+                        intent.putExtra("pkk",PKK[i]);
+                        intent.putExtra("sea",sea[i]);
+                        break;
+                    }
+                }
+                startActivity(intent);
+            }
+        });
+
+        //+ add address 구현하기
+        Button button3 = view.findViewById(R.id.south_sea);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),Specific_Beach.class);
+                for (int i = 0; i<sea.length;i++){
+                    if (sea[i].equals("남해")){
+                        intent.putExtra("pkk",PKK[i]);
+                        intent.putExtra("sea",sea[i]);
+                        break;
+                    }
+                }
+                startActivity(intent);
+            }
+        });
+
+        //+ add address 구현하기
+        Button button4 = view.findViewById(R.id.jeju);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),Specific_Beach.class);
+                for (int i = 0; i<sea.length;i++){
+                    if (sea[i].equals("제주")){
+                        intent.putExtra("pkk",PKK[i]);
+                        intent.putExtra("sea",sea[i]);
+                        break;
+                    }
+                }
+                startActivity(intent);
+            }
+        });
+
+
+
+
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+//            @Override
+//            public void onItemClick(AdapterView parent, View view, int position, long id) {
+//                Intent intent = new Intent(getActivity(),Specific_Beach.class);
+//                intent.putExtra("pkk",PKK[position]);
+//                startActivity(intent);
+//
+//            }
+//        });
         return view;
     }
 

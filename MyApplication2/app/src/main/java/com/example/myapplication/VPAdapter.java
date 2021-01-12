@@ -20,10 +20,12 @@ public class VPAdapter extends FragmentPagerAdapter {
         items.add(new Fragment1());
         items.add(new Fragment2());
         items.add(new Fragment3());
+        items.add(new Fragment4());
 
         itext.add("Address");
         itext.add("Gallery");
         itext.add("For Surfers");
+        itext.add("Notification");
     }
 
     @Nullable
