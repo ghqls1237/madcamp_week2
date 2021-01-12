@@ -116,7 +116,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                                 //time
                                 String[] data_time_all = data_date_splited[1].substring(0, 8).split(":");
-                                int data_hour = Integer.parseInt(data_time_all[0]);
+                                int data_hour = Integer.parseInt(data_time_all[0])+9;
                                 int data_minute = Integer.parseInt(data_time_all[1]);
                                 int data_second = Integer.parseInt(data_time_all[2]);
 
@@ -198,7 +198,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                     //time
                     String[] data_time_all = data_date_splited[1].substring(0, 8).split(":");
-                    int data_hour = Integer.parseInt(data_time_all[0]);
+                    int data_hour = Integer.parseInt(data_time_all[0])+9;
                     int data_minute = Integer.parseInt(data_time_all[1]);
                     int data_second = Integer.parseInt(data_time_all[2]);
 
@@ -274,7 +274,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
                         //time
                         String[] data_time_all = data_date_splited[1].substring(0, 8).split(":");
-                        int data_hour = Integer.parseInt(data_time_all[0]);
+                        int data_hour = Integer.parseInt(data_time_all[0])+9;
                         int data_minute = Integer.parseInt(data_time_all[1]);
                         int data_second = Integer.parseInt(data_time_all[2]);
 

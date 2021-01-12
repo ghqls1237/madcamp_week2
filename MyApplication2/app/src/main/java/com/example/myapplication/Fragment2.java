@@ -72,6 +72,7 @@ public class Fragment2 extends Fragment{
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(recyclerViewAdapter);
 
+        recyclerViewAdapter.remove_all();
         Call<JsonArray> call = retrofitClient.apiService.getImages(FirebaseAuth.getInstance().getCurrentUser().getUid());
         call.enqueue(new Callback<JsonArray>() {
             @RequiresApi(api = Build.VERSION_CODES.O)

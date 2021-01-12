@@ -63,6 +63,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         this.mListener = listener ;
     }
 
+    public void remove_all(){
+        notis.removeAll(notis);
+    }
     class MyViewHolder extends RecyclerView.ViewHolder{
         TextView date;
         TextView text;

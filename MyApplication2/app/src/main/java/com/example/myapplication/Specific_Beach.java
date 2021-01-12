@@ -227,7 +227,7 @@ public class Specific_Beach extends AppCompatActivity {
                     level_wsb[i] = arrayList.get(i).get_comment();
                     wave_wsb[i] = arrayList.get(i).getWave_height();
 
-                    System.out.println("크롤링");
+
                 }
             }
         }

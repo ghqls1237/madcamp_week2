@@ -39,7 +39,7 @@ public class Fragment4 extends Fragment {
         notiRecyclerView = view.findViewById(R.id.noti_recyclerView);
         notiRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         notiRecyclerView.setAdapter(notiAdapter);
-
+        notiAdapter.remove_all();
         notiAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -82,7 +82,7 @@ public class Fragment4 extends Fragment {
 
                         //time
                         String[] data_time_all = data_date_splited[1].substring(0,8).split(":");
-                        int data_hour = Integer.parseInt(data_time_all[0]);
+                        int data_hour = Integer.parseInt(data_time_all[0])+9;
                         int data_minute = Integer.parseInt(data_time_all[1]);
                         int data_second = Integer.parseInt(data_time_all[2]);
 

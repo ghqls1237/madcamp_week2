@@ -97,6 +97,7 @@ public class PostListActivity extends AppCompatActivity {
                         String text = item.getAsJsonObject().get("text").getAsString();
                         String post_pk = item.getAsJsonObject().get("post_pk").getAsString();
                         String date = item.getAsJsonObject().get("date").getAsString();
+                        Log.d("Date : ", date);
 
                         String[] data_date_splited = date.split("T");
                         Log.d("Date 1", data_date_splited[0]);
@@ -110,7 +111,7 @@ public class PostListActivity extends AppCompatActivity {
 
                         //time
                         String[] data_time_all = data_date_splited[1].substring(0,8).split(":");
-                        int data_hour = Integer.parseInt(data_time_all[0]);
+                        int data_hour = Integer.parseInt(data_time_all[0])+9;
                         int data_minute = Integer.parseInt(data_time_all[1]);
                         int data_second = Integer.parseInt(data_time_all[2]);
 
@@ -120,7 +121,7 @@ public class PostListActivity extends AppCompatActivity {
                         String[] current_date_splited = current.split(":");
                         String[] current_date = current_date_splited[0].split("-");
                         String[] current_time = current_date_splited[1].split("-");
-
+                        Log.d("Current Time : ", current);
                         //date
                         int current_year = Integer.parseInt(current_date[0]);
                         int current_month = Integer.parseInt(current_date[1]);

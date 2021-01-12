@@ -50,6 +50,9 @@ public class GridRecyclerViewAdapter extends RecyclerView.Adapter<GridRecyclerVi
         mPosition = position;
     }
 
+    public void remove_all(){
+        arr.removeAll(arr);
+    }
     public void removeItem(int position){
         arr.remove(position);
         notifyDataSetChanged();
