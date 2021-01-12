@@ -109,7 +109,7 @@ public class Specific_Beach extends AppCompatActivity {
         listView.setAdapter(adapter);
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(800);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
